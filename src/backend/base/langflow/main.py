@@ -171,6 +171,11 @@ def get_lifespan(*, fix_migration=False, version=None):
                 queue_service.start()
             logger.debug(f"Flows loaded in {asyncio.get_event_loop().time() - current_time:.2f}s")
 
+            # Load custom Langflow flow
+            from langflow.load.custom_flow import load_custom_flow
+            custom_flow_data = load_custom_flow("src/backend/base/langflow/flows/Langflowmvp.json")
+            logger.debug(f"Custom flow loaded: {custom_flow_data}")
+
             current_time = asyncio.get_event_loop().time()
             logger.debug("Loading mcp servers for projects")
             await init_mcp_servers()
